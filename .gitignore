@@ -108,6 +108,7 @@ buildNumber.properties
 *.iml
 *.iws
 *.ipr
+*.junie
 
 out/
 
