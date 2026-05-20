@@ -11,7 +11,7 @@
 	<groupId>com.luv2code</groupId>
 	<artifactId>spring-boot-ecommerce-01-basic-list-release-1.0</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-ecommerce</name>
+	<name>spring-boot-ecommerce-01-basic-list-release-1.0</name>
 	<description>Spring Boot Ecommerce Project</description>
 
 	<properties>
