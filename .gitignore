@@ -162,5 +162,7 @@ dist/
 *.tmp
 *~.nib
 
-*.angular/
-*/node_modules/
+
+
+.angular/
+node_modules/
