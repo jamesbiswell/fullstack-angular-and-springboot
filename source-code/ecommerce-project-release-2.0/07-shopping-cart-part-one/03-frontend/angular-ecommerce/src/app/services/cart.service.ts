@@ -9,6 +9,8 @@ export class CartService {
 
   cartItems: CartItem[] = [];
 
+  // Subjects are like observables, but they can be used to publish a value for the subscribers to consume, using the next method. Subjects are a special type of Observable that allows values to be multicasted to many Observers.
+  // Subjects are like EventEmitters: they maintain a registry of many listeners.
   totalPrice: Subject<number> = new Subject<number>();
   totalQuantity: Subject<number> = new Subject<number>();
 
@@ -22,7 +24,6 @@ export class CartService {
 
     if (this.cartItems.length > 0) {
       // find the item in the cart based on item id
-
       existingCartItem = this.cartItems.find( tempCartItem => tempCartItem.id === theCartItem.id );
 
       // check if we found it
@@ -52,7 +53,8 @@ export class CartService {
       totalQuantityValue += currentCartItem.quantity;
     }
 
-    // publish the new values ... all subscribers will receive the new data
+    // publish the new values ... all subscribers will receive the new data.
+    // the next method is like the publish method in the observer pattern, and it is used to provide new data to subscribers.
     this.totalPrice.next(totalPriceValue);
     this.totalQuantity.next(totalQuantityValue);
 
@@ -65,7 +67,8 @@ export class CartService {
     console.log('Contents of the cart');
     for (let tempCartItem of this.cartItems) {
       const subTotalPrice = tempCartItem.quantity * tempCartItem.unitPrice;
-      console.log(`name: ${tempCartItem.name}, quantity=${tempCartItem.quantity}, unitPrice=${tempCartItem.unitPrice}, subTotalPrice=${subTotalPrice}`);
+      console.log(`name: ${tempCartItem.name}, quantity=${tempCartItem.quantity}, 
+      unitPrice=${tempCartItem.unitPrice}, subTotalPrice=${subTotalPrice}`);
     }
 
     console.log(`totalPrice: ${totalPriceValue.toFixed(2)}, totalQuantity: ${totalQuantityValue}`);
