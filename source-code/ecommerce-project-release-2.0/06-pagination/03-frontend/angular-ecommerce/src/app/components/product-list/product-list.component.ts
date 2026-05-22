@@ -49,7 +49,7 @@ export class ProductListComponent implements OnInit {
 
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
-    // if we have a different keyword than previous
+    // if we have a different keyword than before,
     // then set thePageNumber to 1
 
     if (this.previousKeyword != theKeyword) {
@@ -61,6 +61,7 @@ export class ProductListComponent implements OnInit {
     console.log(`keyword=${theKeyword}, thePageNumber=${this.thePageNumber}`);
 
     // now search for the products using keyword
+    // NG Bootstrap (NgbPagination) is 1-based for page numbers, Spring Data REST is 0-based, so we need to subtract 1
     this.productService.searchProductsPaginate(this.thePageNumber - 1,
                                                this.thePageSize,
                                                theKeyword).subscribe(this.processResult());
@@ -86,7 +87,7 @@ export class ProductListComponent implements OnInit {
     // Note: Angular will reuse a component if it is currently being viewed
     //
 
-    // if we have a different category id than previous
+    // if we have a different category id than before,
     // then set thePageNumber back to 1
     if (this.previousCategoryId != this.currentCategoryId) {
       this.thePageNumber = 1;
@@ -97,6 +98,7 @@ export class ProductListComponent implements OnInit {
     console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
 
     // now get the products for the given category id
+    // NG Bootstrap (NgbPagination) is 1-based for page numbers, Spring Data REST is 0-based, so we need to subtract 1
     this.productService.getProductListPaginate(this.thePageNumber - 1,
                                                this.thePageSize,
                                                this.currentCategoryId)
@@ -112,6 +114,7 @@ export class ProductListComponent implements OnInit {
   processResult() {
     return (data: any) => {
       this.products = data._embedded.products;
+      // NG Bootstrap (NgbPagination) is 1-based for page numbers, Spring Data REST is 0-based, so we need to add 1
       this.thePageNumber = data.page.number + 1;
       this.thePageSize = data.page.size;
       this.theTotalElements = data.page.totalElements;
