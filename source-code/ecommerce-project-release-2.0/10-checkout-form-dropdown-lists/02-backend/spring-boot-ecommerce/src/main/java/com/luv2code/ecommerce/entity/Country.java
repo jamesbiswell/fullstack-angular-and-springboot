@@ -25,17 +25,10 @@ public class Country {
     private String name;
 
     @OneToMany(mappedBy = "country")
+    // Will ignore this field when serializing to JSON for the purpose of this entity
+    // Also useful to prevent infinite recursion scenarios
+    // when you have bidirectional relationships between entities
     @JsonIgnore
     private List<State> states;
 
 }
-
-
-
-
-
-
-
-
-
-

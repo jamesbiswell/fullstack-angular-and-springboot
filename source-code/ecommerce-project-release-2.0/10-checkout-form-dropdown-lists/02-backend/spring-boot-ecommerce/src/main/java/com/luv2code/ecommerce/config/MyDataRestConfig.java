@@ -26,10 +26,25 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         entityManager = theEntityManager;
     }
 
-
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+        
+        //code refactored with helper method - disableHttpMethods() to avoid code duplication
 
+        /*
+        // disable HTTP methods for Product: PUT, POST and DELETE
+        config.getExposureConfiguration()
+                .forDomainType(Product.class)
+                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
+                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+        
+        // disable HTTP methods for ProductCategory: PUT, POST and DELETE
+        config.getExposureConfiguration()
+                .forDomainType(ProductCategory.class)
+                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
+                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+        */
+        
         HttpMethod[] theUnsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE};
 
         // disable HTTP methods for ProductCategory: PUT, POST and DELETE
@@ -42,6 +57,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         exposeIds(config);
     }
 
+    // helper method for refactoring
     private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
         config.getExposureConfiguration()
                 .forDomainType(theClass)
@@ -52,7 +68,6 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
     private void exposeIds(RepositoryRestConfiguration config) {
 
         // expose entity ids
-        //
 
         // - get a list of all entity classes from the entity manager
         Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
@@ -70,12 +85,3 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         config.exposeIdsFor(domainTypes);
     }
 }
-
-
-
-
-
-
-
-
-

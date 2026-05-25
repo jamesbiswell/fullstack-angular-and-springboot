@@ -22,15 +22,3 @@ public class State {
     private Country country;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

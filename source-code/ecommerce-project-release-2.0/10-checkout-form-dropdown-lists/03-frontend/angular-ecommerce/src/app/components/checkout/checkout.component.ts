@@ -15,7 +15,7 @@ export class CheckoutComponent implements OnInit {
 
   totalPrice: number = 0;
   totalQuantity: number = 0;
-  
+
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
 
@@ -23,13 +23,12 @@ export class CheckoutComponent implements OnInit {
 
   shippingAddressStates: State[] = [];
   billingAddressStates: State[] = [];
-  
-  
+
   constructor(private formBuilder: FormBuilder,
-              private luv2ShopFormService: Luv2ShopFormService) { }
+              private luv2ShopFormService: Luv2ShopFormService) {}
 
   ngOnInit(): void {
-    
+
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: [''],
@@ -61,7 +60,7 @@ export class CheckoutComponent implements OnInit {
     });
 
     // populate credit card months
-
+    // JavaScript Date.getMonth() returns a zero-based number, so we add 1 to it
     const startMonth: number = new Date().getMonth() + 1;
     console.log("startMonth: " + startMonth);
 
@@ -73,7 +72,6 @@ export class CheckoutComponent implements OnInit {
     );
 
     // populate credit card years
-
     this.luv2ShopFormService.getCreditCardYears().subscribe(
       data => {
         console.log("Retrieved credit card years: " + JSON.stringify(data));
@@ -82,7 +80,6 @@ export class CheckoutComponent implements OnInit {
     );
 
     // populate countries
-
     this.luv2ShopFormService.getCountries().subscribe(
       data => {
         console.log("Retrieved countries: " + JSON.stringify(data));
@@ -97,27 +94,27 @@ export class CheckoutComponent implements OnInit {
       this.checkoutFormGroup.controls.billingAddress
             .setValue(this.checkoutFormGroup.controls.shippingAddress.value);
 
-      // bug fix for states
+      // bug fix to keep states in sync
       this.billingAddressStates = this.shippingAddressStates;
 
     }
     else {
       this.checkoutFormGroup.controls.billingAddress.reset();
 
-      // bug fix for states
+      // bug fix to keep states in sync
       this.billingAddressStates = [];
     }
-    
+
   }
 
   onSubmit() {
+
     console.log("Handling the submit button");
     console.log(this.checkoutFormGroup.get('customer').value);
     console.log("The email address is " + this.checkoutFormGroup.get('customer').value.email);
-  
     console.log("The shipping address country is " + this.checkoutFormGroup.get('shippingAddress').value.country.name);
     console.log("The shipping address state is " + this.checkoutFormGroup.get('shippingAddress').value.state.name);
-  
+
   }
 
   handleMonthsAndYears() {
@@ -128,13 +125,12 @@ export class CheckoutComponent implements OnInit {
     const selectedYear: number = Number(creditCardFormGroup.value.expirationYear);
 
     // if the current year equals the selected year, then start with the current month
-
     let startMonth: number;
 
     if (currentYear === selectedYear) {
+      // JavaScript Date.getMonth() returns a zero-based number, so we add 1 to it
       startMonth = new Date().getMonth() + 1;
-    }
-    else {
+    } else {
       startMonth = 1;
     }
 
@@ -160,9 +156,8 @@ export class CheckoutComponent implements OnInit {
       data => {
 
         if (formGroupName === 'shippingAddress') {
-          this.shippingAddressStates = data; 
-        }
-        else {
+          this.shippingAddressStates = data;
+        } else {
           this.billingAddressStates = data;
         }
 
