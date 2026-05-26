@@ -9,6 +9,8 @@ export class CartService {
 
   cartItems: CartItem[] = [];
 
+  // While ReplaySubject is used to cache all the emitted events (i.e. the values) and replay them to new subscribers,
+  // BehaviorSubject is used to cache just the last emitted value and replay it as soon as a new subscriber subscribes.
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
