@@ -6,6 +6,7 @@ import com.luv2code.ecommerce.dto.PurchaseResponse;
 import com.luv2code.ecommerce.entity.Customer;
 import com.luv2code.ecommerce.entity.Order;
 import com.luv2code.ecommerce.entity.OrderItem;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,6 +18,7 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     private CustomerRepository customerRepository;
 
+    @Autowired
     public CheckoutServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
@@ -24,7 +26,7 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Override
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
-
+        
         // retrieve the order info from dto
         Order order = purchase.getOrder();
 
@@ -59,12 +61,3 @@ public class CheckoutServiceImpl implements CheckoutService {
         return UUID.randomUUID().toString();
     }
 }
-
-
-
-
-
-
-
-
-
