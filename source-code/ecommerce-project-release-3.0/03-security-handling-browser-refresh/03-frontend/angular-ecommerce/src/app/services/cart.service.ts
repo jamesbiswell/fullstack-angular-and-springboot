@@ -13,12 +13,25 @@ export class CartService {
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
+  // two types of web storage: sessionStorage and localStorage
+
+  // sessionStorage stores the data in the web browser's session (memory), and the
+  // data is cleared when the page session ends, e.g. when the browser tab is closed.
+  // data is not shared across browser tabs.
+
+  // localStorage stores the data locally on the client web browser computer.
+  // data is kept when the browser tab is closed, and so is available for other tabs
+  // of the same browser for the same origin (protocol + hostname + port) - the scope.
+
+  // in both cases, the data is stored as key-value pairs, where both the key and value are strings.
+  // in both cases, the data is not sent to the server.
+
   storage: Storage = sessionStorage;
   // storage: Storage = localStorage;
 
-  constructor() { 
+  constructor() {
 
-    // read data from storage
+  // read data from storage as a JSON string and convert it to an object
     let data = JSON.parse(this.storage.getItem('cartItems')!);
 
     if (data != null) {
@@ -76,12 +89,13 @@ export class CartService {
     // log cart data just for debugging purposes
     this.logCartData(totalPriceValue, totalQuantityValue);
 
-    // persist cart data
+    // persist cart data in web storage
     this.persistCartItems();
   }
 
   persistCartItems() {
-    this.storage.setItem('cartItems', JSON.stringify(this.cartItems));
+    // converts object to a JSON string and stores it with the key 'cartItems'
+    this.storage.setItem('cartItems',JSON.stringify(this.cartItems));
   }
 
   logCartData(totalPriceValue: number, totalQuantityValue: number) {
