@@ -4,5 +4,4 @@ export class OrderItem {
                 public unitPrice: number,
                 public quantity: number,
                 public productId: string) { }
-
 }

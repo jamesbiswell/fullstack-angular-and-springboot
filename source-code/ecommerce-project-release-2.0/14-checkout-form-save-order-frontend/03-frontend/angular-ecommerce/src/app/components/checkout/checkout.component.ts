@@ -35,8 +35,7 @@ export class CheckoutComponent implements OnInit {
               private luv2ShopFormService: Luv2ShopFormService,
               private cartService: CartService,
               private checkoutService: CheckoutService,
-              private router: Router) {
-               }
+              private router: Router) { }
 
   ngOnInit(): void {
     
@@ -181,7 +180,18 @@ export class CheckoutComponent implements OnInit {
     if (this.checkoutFormGroup.invalid) {
       this.checkoutFormGroup.markAllAsTouched();
       return;
+
     }
+
+    // set up order
+    // get cart items
+    // create orderItems from cartItems
+    // set up purchase
+    // populate purchase - customer
+    // populate purchase - shipping address
+    // populate purchase - billing address
+    // populate purchase - order and orderItems
+    // call REST API via the CheckoutService
 
     // set up order
     let order = new Order(this.totalQuantity, this.totalPrice);
@@ -198,8 +208,10 @@ export class CheckoutComponent implements OnInit {
     }
     */
 
-    // - short way of doing the same thingy
-    let orderItems: OrderItem[] = cartItems.map(tempCartItem => new OrderItem(tempCartItem.imageUrl!, tempCartItem.unitPrice!, tempCartItem.quantity, tempCartItem.id!));
+    // - short way of doing the same thing
+    let orderItems: OrderItem[] = cartItems.map(tempCartItem =>
+        new OrderItem(tempCartItem.imageUrl!, tempCartItem.unitPrice!,
+            tempCartItem.quantity, tempCartItem.id!));
 
     // set up purchase
     let purchase = new Purchase();
@@ -253,6 +265,7 @@ export class CheckoutComponent implements OnInit {
 
     // navigate back to the products page
     this.router.navigateByUrl("/products");
+    
   }
 
   handleMonthsAndYears() {
