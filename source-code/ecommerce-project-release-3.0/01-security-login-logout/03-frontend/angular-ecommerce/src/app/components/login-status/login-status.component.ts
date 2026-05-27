@@ -7,6 +7,7 @@ import { OktaAuth } from '@okta/okta-auth-js';
   templateUrl: './login-status.component.html',
   styleUrls: ['./login-status.component.css']
 })
+
 export class LoginStatusComponent implements OnInit {
 
   isAuthenticated: boolean = false;
@@ -29,7 +30,7 @@ export class LoginStatusComponent implements OnInit {
   getUserDetails() {
     if (this.isAuthenticated) {
 
-      // Fetch the logged in user details (user's claims)
+      // Fetch the logged-in user details (user's claims)
       //
       // user full name is exposed as a property name
       this.oktaAuth.getUser().then(
@@ -41,7 +42,7 @@ export class LoginStatusComponent implements OnInit {
   }
 
   logout() {
-    // Terminates the session with Okta and removes current tokens.
+    // Terminates the session with Okta and removes current tokens
     this.oktaAuth.signOut();
   }
 

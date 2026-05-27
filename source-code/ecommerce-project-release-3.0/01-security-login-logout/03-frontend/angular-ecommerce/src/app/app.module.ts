@@ -22,7 +22,7 @@ import { LoginStatusComponent } from './components/login-status/login-status.com
 import {
   OktaAuthModule,
   OktaCallbackComponent,
-  OKTA_CONFIG 
+  OKTA_CONFIG
 } from '@okta/okta-angular';
 
 import { OktaAuth } from '@okta/okta-auth-js';
@@ -37,7 +37,6 @@ const routes: Routes = [
 
   {path: 'login/callback', component: OktaCallbackComponent},
   {path: 'login', component: LoginComponent},
-  
   {path: 'checkout', component: CheckoutComponent},
   {path: 'cart-details', component: CartDetailsComponent},
   {path: 'products/:id', component: ProductDetailsComponent},
@@ -70,7 +69,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     OktaAuthModule
   ],
+
   providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth }}],
   bootstrap: [AppComponent]
+
 })
 export class AppModule { }
