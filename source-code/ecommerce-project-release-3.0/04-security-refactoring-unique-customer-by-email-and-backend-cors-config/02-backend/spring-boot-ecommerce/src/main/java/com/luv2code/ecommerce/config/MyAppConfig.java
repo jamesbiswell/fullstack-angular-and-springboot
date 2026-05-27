@@ -7,26 +7,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class MyAppConfig implements WebMvcConfigurer {
-
+    
+    // specified in application.properties
     @Value("${allowed.origins}")
     private String[] theAllowedOrigins;
-
+    
+    // specified in application.properties
     @Value("${spring.data.rest.base-path}")
     private String basePath;
 
     @Override
     public void addCorsMappings(CorsRegistry cors) {
 
-        // set up cors mapping
+        // configuring the cors mapping - used by Controllers
         cors.addMapping(basePath + "/**").allowedOrigins(theAllowedOrigins);
     }
 }
-
-
-
-
-
-
-
-
-

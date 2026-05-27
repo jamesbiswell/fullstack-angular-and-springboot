@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
+// no longer needed since we have global cors mapping
+// @CrossOrigin("http://localhost:4200")
+
+// Default value of exported is true, so we don't have to list it
 @RepositoryRestResource
 public interface StateRepository extends JpaRepository<State, Integer> {
 
