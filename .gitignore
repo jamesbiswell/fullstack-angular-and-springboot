@@ -166,3 +166,4 @@ dist/
 
 .angular/
 node_modules/
+auth0-security/
