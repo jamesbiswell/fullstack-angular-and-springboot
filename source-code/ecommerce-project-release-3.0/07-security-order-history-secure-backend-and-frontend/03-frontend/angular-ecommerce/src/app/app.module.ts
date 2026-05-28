@@ -23,7 +23,7 @@ import {
   OktaAuthGuard,
   OktaAuthModule,
   OktaCallbackComponent,
-  OKTA_CONFIG 
+  OKTA_CONFIG
 } from '@okta/okta-angular';
 
 import { OktaAuth } from '@okta/okta-auth-js';
@@ -93,4 +93,11 @@ const routes: Routes = [
               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
+
+// HTTP_INTERCEPTORS is the token for the collection of HTTP interceptors.
+// The AuthInterceptorService class is registered as an HTTP interceptor.
+// By setting multi: true, AuthInterceptorService this means that
+// HTTP_INTERCEPTORS is a token for injecting an array of values.
+// The class is added to the existing collection of HTTP_INTERCEPTORS rather than overwriting it.
+
 export class AppModule { }

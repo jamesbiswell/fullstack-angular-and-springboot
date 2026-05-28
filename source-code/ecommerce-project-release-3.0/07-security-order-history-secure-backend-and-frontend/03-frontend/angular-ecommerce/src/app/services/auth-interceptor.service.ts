@@ -4,10 +4,10 @@ import { OKTA_AUTH } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { from, lastValueFrom, Observable } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(@Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { }

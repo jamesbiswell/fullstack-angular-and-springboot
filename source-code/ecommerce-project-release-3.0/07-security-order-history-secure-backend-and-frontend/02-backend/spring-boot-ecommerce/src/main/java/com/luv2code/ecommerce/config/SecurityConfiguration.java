@@ -32,6 +32,15 @@ public class SecurityConfiguration {
         // force a non-empty response body for 401's to make the response more friendly
         Okta.configureResourceServer401ResponseBody(http);
 
+        /*
+        - Otherwise checkout request fails with HTTP POST
+        - By default CSRF is enabled for all state-changing methods (POST, PUT, DELETE, PATCH)
+        - CSRF performs checks on POST using cookies
+        - Since the Angular app is not using cookies for session tracking, CSRF says request is unauthorised
+        - Can be resolved by disabling CSRF
+        - This technique is commonly used for REST APIs where it is stateless and authentication is done using tokens instead of cookies
+         */
+        
         // disable CSRF since we are not using Cookies for session tracking
         http.csrf().disable();
 
