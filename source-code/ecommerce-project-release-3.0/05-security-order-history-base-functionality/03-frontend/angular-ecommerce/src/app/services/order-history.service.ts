@@ -6,6 +6,7 @@ import { OrderHistory } from '../common/order-history';
 @Injectable({
   providedIn: 'root'
 })
+
 export class OrderHistoryService {
 
   private orderUrl = 'http://localhost:8080/api/orders';
@@ -25,4 +26,5 @@ interface GetResponseOrderHistory {
   _embedded: {
     orders: OrderHistory[];
   }
+
 }
