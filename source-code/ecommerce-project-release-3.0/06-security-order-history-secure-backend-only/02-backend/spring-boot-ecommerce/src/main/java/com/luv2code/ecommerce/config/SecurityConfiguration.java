@@ -14,11 +14,12 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        // protect endpoint /api/orders
+        // protect the endpoint /api/orders
         http.authorizeRequests(configurer ->
                         configurer
                                 .antMatchers("/api/orders/**")
-                                .authenticated())
+                                .authenticated()
+                        )
                 .oauth2ResourceServer()
                 .jwt();
 
@@ -29,16 +30,9 @@ public class SecurityConfiguration {
         http.setSharedObject(ContentNegotiationStrategy.class,
                              new HeaderContentNegotiationStrategy());
 
-        // force a non-empty response body for 401's to make the response more friendly
+        // force a non-empty response body for 401s to make the response more friendly
         Okta.configureResourceServer401ResponseBody(http);
 
         return http.build();
     }
 }
-
-
-
-
-
-
-
