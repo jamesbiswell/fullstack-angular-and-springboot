@@ -166,4 +166,4 @@ dist/
 
 .angular/
 node_modules/
-auth0-security/
+07-security-using-auth0/
