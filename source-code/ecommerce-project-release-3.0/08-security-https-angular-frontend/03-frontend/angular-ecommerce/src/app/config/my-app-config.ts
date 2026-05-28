@@ -1,5 +1,5 @@
 export default {
-
+// update redirect uri to https
     oidc: {
         clientId: '<<UPDATE-WITH-YOUR-APP-CLIENT-ID>>',
         issuer: 'https://<<UPDATE-WITH-YOUR-DEV-DOMAIN>>/oauth2/default',
