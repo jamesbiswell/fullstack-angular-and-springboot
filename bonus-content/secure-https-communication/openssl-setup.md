@@ -9,7 +9,7 @@ There are different steps for each operating system. Choose the steps for your e
 
 ---
 
-## About SSL/TLS
+## About SSL / TLS
 
 - 1994 to 1999, SSL 1.0, then 2.0, then 3.0 released
 - 1999 SSL 3.1 aka TLS 1.0
