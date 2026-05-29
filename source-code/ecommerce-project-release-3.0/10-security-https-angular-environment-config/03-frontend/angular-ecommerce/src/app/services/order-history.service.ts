@@ -9,6 +9,7 @@ import { OrderHistory } from '../common/order-history';
 })
 export class OrderHistoryService {
 
+  // define the Endpoint URL using the environment variable
   private orderUrl = environment.luv2shopApiUrl + '/orders';
 
   constructor(private httpClient: HttpClient) { }

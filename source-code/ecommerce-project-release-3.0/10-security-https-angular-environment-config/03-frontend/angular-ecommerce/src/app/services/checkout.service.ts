@@ -9,6 +9,7 @@ import { Purchase } from '../common/purchase';
 })
 export class CheckoutService {
 
+  // define the Endpoint URL using the environment variable
   private purchaseUrl = environment.luv2shopApiUrl + '/checkout/purchase';
 
   constructor(private httpClient: HttpClient) { }

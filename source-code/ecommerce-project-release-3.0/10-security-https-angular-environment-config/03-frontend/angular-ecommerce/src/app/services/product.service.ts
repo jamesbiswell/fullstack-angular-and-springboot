@@ -11,8 +11,10 @@ import { environment } from 'src/environments/environment';
 })
 export class ProductService {
 
+  // define the Endpoint URL using the environment variable
   private baseUrl = environment.luv2shopApiUrl + '/products';
 
+  // define the Endpoint URL using the environment variable
   private categoryUrl = environment.luv2shopApiUrl + '/product-category';
 
   constructor(private httpClient: HttpClient) { }

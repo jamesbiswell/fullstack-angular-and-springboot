@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export class Luv2ShopFormService {
 
+  // define the Endpoint URLs using the environment variable
   private countriesUrl = environment.luv2shopApiUrl + '/countries';
   private statesUrl = environment.luv2shopApiUrl + '/states';
 
