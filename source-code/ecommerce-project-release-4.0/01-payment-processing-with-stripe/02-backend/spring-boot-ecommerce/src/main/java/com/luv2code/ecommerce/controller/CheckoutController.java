@@ -27,7 +27,6 @@ public class CheckoutController {
     public PurchaseResponse placeOrder(@RequestBody Purchase purchase) {
 
         PurchaseResponse purchaseResponse = checkoutService.placeOrder(purchase);
-
         return purchaseResponse;
     }
 
@@ -35,18 +34,7 @@ public class CheckoutController {
     public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfo paymentInfo) throws StripeException {
 
         PaymentIntent paymentIntent = checkoutService.createPaymentIntent(paymentInfo);
-
         String paymentStr = paymentIntent.toJson();
-
         return new ResponseEntity<>(paymentStr, HttpStatus.OK);
     }
 }
-
-
-
-
-
-
-
-
-

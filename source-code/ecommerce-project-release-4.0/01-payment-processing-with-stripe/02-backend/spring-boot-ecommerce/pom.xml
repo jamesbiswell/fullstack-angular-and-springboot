@@ -20,6 +20,7 @@
 
 	<dependencies>
 
+		<!-- Stripe Dependency -->
 		<!-- https://mvnrepository.com/artifact/com.stripe/stripe-java -->
 		<dependency>
 			<groupId>com.stripe</groupId>

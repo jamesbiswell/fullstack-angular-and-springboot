@@ -26,7 +26,7 @@ public class CheckoutServiceImpl implements CheckoutService {
 
         this.customerRepository = customerRepository;
 
-        // initialize Stripe API with secret key
+        // initialize Stripe API (abstract class) with secret key
         Stripe.apiKey = secretKey;
     }
 
@@ -78,12 +78,14 @@ public class CheckoutServiceImpl implements CheckoutService {
         paymentMethodTypes.add("card");
 
         Map<String, Object> params = new HashMap<>();
+        
         params.put("amount", paymentInfo.getAmount());
         params.put("currency", paymentInfo.getCurrency());
         params.put("payment_method_types", paymentMethodTypes);
         params.put("description", "Luv2Shop purchase");
         params.put("receipt_email", paymentInfo.getReceiptEmail());
 
+        // Call PaymentIntent static method to create a new PaymentIntent
         return PaymentIntent.create(params);
     }
 
@@ -95,12 +97,3 @@ public class CheckoutServiceImpl implements CheckoutService {
         return UUID.randomUUID().toString();
     }
 }
-
-
-
-
-
-
-
-
-
