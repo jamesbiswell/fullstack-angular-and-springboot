@@ -35,10 +35,12 @@ export class CheckoutComponent implements OnInit {
     
   storage: Storage = sessionStorage;
 
-  // initialize Stripe API
+  // Initialise the Stripe API
   stripe = Stripe(environment.stripePublishableKey);
 
+  // The custom DTO created to send the payment details from the Angular frontend to the Spring Boot backend
   paymentInfo: PaymentInfo = new PaymentInfo();
+  // cardElement will hold a reference to the Stripe Elements card component
   cardElement: any;
   displayError: any = "";
 
@@ -52,7 +54,7 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // setup Stripe payment form
+    // Set up the Stripe payment form
     this.setupStripePaymentForm();
     
     this.reviewCartDetails();
@@ -96,6 +98,8 @@ export class CheckoutComponent implements OnInit {
                                       Luv2ShopValidators.notOnlyWhitespace])
       }),
       creditCard: this.formBuilder.group({
+        // Not now required as Stripe Elements will be used to capture the credit
+        // card details and Stripe Elements will perform its own validation
         /*
         cardType: new FormControl('', [Validators.required]),
         nameOnCard:  new FormControl('', [Validators.required, Validators.minLength(2), 
@@ -108,6 +112,7 @@ export class CheckoutComponent implements OnInit {
       })
     });
 
+    // Not now required as Stripe Elements will be used
     /*
     // populate credit card months
 
@@ -132,7 +137,6 @@ export class CheckoutComponent implements OnInit {
     */
 
     // populate countries
-
     this.luv2ShopFormService.getCountries().subscribe(
       data => {
         console.log("Retrieved countries: " + JSON.stringify(data));
@@ -141,9 +145,10 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
+  // Set up the Stripe payment form
   setupStripePaymentForm() {
 
-    // get a handle to stripe elements
+    // Get a handle to stripe elements
     var elements = this.stripe.elements();
 
     // Create a card element ... and hide the zip-code field
@@ -155,18 +160,17 @@ export class CheckoutComponent implements OnInit {
     // Add event binding for the 'change' event on the card element
     this.cardElement.on('change', (event) => {
 
-      // get a handle to card-errors element
+      // Get a handle to card errors element
       this.displayError = document.getElementById('card-errors');
 
       if (event.complete) {
         this.displayError.textContent = "";
       } else if (event.error) {
-        // show validation error to customer
+        // Show validation error to customer
         this.displayError.textContent = event.error.message;
       }
 
     });
-
   }
 
   reviewCartDetails() {
@@ -250,7 +254,7 @@ export class CheckoutComponent implements OnInit {
     }
     */
 
-    // - short way of doing the same thingy
+    // - short way of doing the same thing
     let orderItems: OrderItem[] = cartItems.map(tempCartItem => new OrderItem(tempCartItem));
 
     // set up purchase
@@ -277,12 +281,13 @@ export class CheckoutComponent implements OnInit {
     purchase.order = order;
     purchase.orderItems = orderItems;
 
-    // compute payment info
+    // Compute the payment info - convert amount in dollars to cents
+    // as Stripe expects amounts to be in the smallest currency unit
     this.paymentInfo.amount = Math.round(this.totalPrice * 100);
     this.paymentInfo.currency = "USD"; 
     this.paymentInfo.receiptEmail = purchase.customer.email;
 
-    // if valid form then
+    // - if valid form then:
     // - create payment intent
     // - confirm card payment
     // - place order
@@ -291,11 +296,14 @@ export class CheckoutComponent implements OnInit {
 
       this.isDisabled = true;
 
+      // Create the payment intent using the Spring Boot REST API Checkout Controller and Service
       this.checkoutService.createPaymentIntent(this.paymentInfo).subscribe(
         (paymentIntentResponse) => {
+          // Send the credit card data directly to Stripe
           this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
             {
               payment_method: {
+                // Use the card element for payment method
                 card: this.cardElement,
                 billing_details: {
                   email: purchase.customer.email,
@@ -312,11 +320,11 @@ export class CheckoutComponent implements OnInit {
             }, { handleActions: false })
           .then(function(result) {
             if (result.error) {
-              // inform the customer there was an error
+              // Inform the customer if there was an error
               alert(`There was an error: ${result.error.message}`);
               this.isDisabled = false;
             } else {
-              // call REST API via the CheckoutService
+              // Call the Spring Boot REST API via the Angular Checkout Service to place the order
               this.checkoutService.placeOrder(purchase).subscribe({
                 next: response => {
                   alert(`Your order has been received.\nOrder tracking number: ${response.orderTrackingNumber}`);
@@ -330,7 +338,7 @@ export class CheckoutComponent implements OnInit {
                   this.isDisabled = false;
                 }
               })
-            }            
+            }
           }.bind(this));
         }
       );
@@ -346,6 +354,7 @@ export class CheckoutComponent implements OnInit {
     this.cartService.cartItems = [];
     this.cartService.totalPrice.next(0);
     this.cartService.totalQuantity.next(0);
+    // Updates storage with the latest state of the cart
     this.cartService.persistCartItems();
     
     // reset the form

@@ -12,14 +12,16 @@ export class CheckoutService {
 
   private purchaseUrl = environment.luv2shopApiUrl + '/checkout/purchase';
 
+  // Set up payment intent url
   private paymentIntentUrl = environment.luv2shopApiUrl + '/checkout/payment-intent';
   
   constructor(private httpClient: HttpClient) { }
 
   placeOrder(purchase: Purchase): Observable<any> {
-    return this.httpClient.post<Purchase>(this.purchaseUrl, purchase);    
+    return this.httpClient.post<Purchase>(this.purchaseUrl, purchase);
   }
 
+  // Create the payment intent
   createPaymentIntent(paymentInfo: PaymentInfo): Observable<any> {
     return this.httpClient.post<PaymentInfo>(this.paymentIntentUrl, paymentInfo);
   }
