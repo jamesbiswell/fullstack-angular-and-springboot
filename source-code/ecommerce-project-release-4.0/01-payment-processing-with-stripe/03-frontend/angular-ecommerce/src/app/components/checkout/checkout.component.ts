@@ -44,6 +44,7 @@ export class CheckoutComponent implements OnInit {
   cardElement: any;
   displayError: any = "";
 
+  // Used to prevent multiple clicks of the submit button while the payment is being processed
   isDisabled: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
@@ -294,6 +295,7 @@ export class CheckoutComponent implements OnInit {
 
     if (!this.checkoutFormGroup.invalid && this.displayError.textContent === "") {
 
+      // set isDisabled to true while the payment is being processed to prevent multiple clicks of the submit button
       this.isDisabled = true;
 
       // Create the payment intent using the Spring Boot REST API Checkout Controller and Service
@@ -302,9 +304,11 @@ export class CheckoutComponent implements OnInit {
           // Send the credit card data directly to Stripe
           this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
             {
+
               payment_method: {
                 // Use the card element for payment method
                 card: this.cardElement,
+                // Adding customer billing details (it also helps with Stripe fraud detection)
                 billing_details: {
                   email: purchase.customer.email,
                   name: `${purchase.customer.firstName} ${purchase.customer.lastName}`,
@@ -317,11 +321,13 @@ export class CheckoutComponent implements OnInit {
                   }
                 }
               }
+
             }, { handleActions: false })
           .then(function(result) {
             if (result.error) {
               // Inform the customer if there was an error
               alert(`There was an error: ${result.error.message}`);
+              // set isDisabled back to false again
               this.isDisabled = false;
             } else {
               // Call the Spring Boot REST API via the Angular Checkout Service to place the order
@@ -331,10 +337,12 @@ export class CheckoutComponent implements OnInit {
 
                   // reset cart
                   this.resetCart();
+                  // set isDisabled back to false again
                   this.isDisabled = false;
                 },
                 error: err => {
                   alert(`There was an error: ${err.message}`);
+                  // set isDisabled back to false again
                   this.isDisabled = false;
                 }
               })
