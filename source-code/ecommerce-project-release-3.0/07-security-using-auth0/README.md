@@ -1,4 +1,4 @@
-# Security Login/Logout - Auth0 Integration Tutorial  
+# Security Login/Logout - Auth0 Integration Tutorial
 
 ## Introduction
 
@@ -12,40 +12,40 @@ This tutorial assumes that you have already completed the section **“eCommerce
 
 ## Overview of Steps
 
-1. Create a developer account on Auth0  
-2. Create Application and provide Application Information  
-3. Create API  
-4. Install Auth0 dependencies  
-5. Create/Update `my-app-config.ts`  
-6. Add Login Status Component  
-7. Update `app.module.ts`  
-8. Add `auth-interceptor.service.ts`  
-9. Spring Boot – Backend Changes  
-10. Run the Application  
+1. Create a developer account on Auth0
+2. Create Application and provide Application Information
+3. Create API
+4. Install Auth0 dependencies
+5. Create/Update `my-app-config.ts`
+6. Add Login Status Component
+7. Update `app.module.ts`
+8. Add `auth-interceptor.service.ts`
+9. Spring Boot – Backend Changes
+10. Run the Application
 
 
 ## 1. Create a Developer Account on Auth0
 
 ### SIGN UP
-1. Open: [https://developer.auth0.com/](https://developer.auth0.com/)  
-2. Sign up.
+1. Open: [https://developer.auth0.com/](https://developer.auth0.com/)
+2. Sign up
 
 
 ## 2. Create an Application on Auth0 and Provide App Information
 
 ### Create Application
-1. In Auth0 Developer Account, select `Applications > + Create Application`  
-2. Name: `My Angular App`  
-3. Choose `Single Page Applications`  
+1. In Auth0 Developer Account, select `Applications > + Create Application`
+2. Name: `My Angular App`
+3. Choose `Single Page Applications`
 4. Click Create
 
-**PROVIDE APP INFORMATION**  
-Add Application URIs:  
+**PROVIDE APP INFORMATION**
+Add Application URIs:
 
-- **Allowed Callback URLs**: `http://localhost:4200/login/callback`  
-- **Allowed Logout URLs**: `http://localhost:4200`  
-- **Allowed Web Origins**: `http://localhost:4200`  
-- **Allowed Origins (CORS)**: `http://localhost:4200`  
+- **Allowed Callback URLs**: `http://localhost:4200/login/callback`
+- **Allowed Logout URLs**: `http://localhost:4200`
+- **Allowed Web Origins**: `http://localhost:4200`
+- **Allowed Origins (CORS)**: `http://localhost:4200`
 
 ![](images/create-app-01.png)
 
@@ -55,21 +55,23 @@ Add Application URIs:
 
 Click *Save*
 
+
 ## 3. Create API
 
-**CREATE API**  
-1. In Auth0 Developer Account, select `Applications > API > + Create API`  
-2. Name: `My Spring Boot App`  
-3. Identifier: `http://localhost:8080`  
+**CREATE API**
+1. In Auth0 Developer Account, select `Applications > API > + Create API`
+2. Name: `My Spring Boot App`
+3. Identifier: `http://localhost:8080`
 4. Click Create
 
 ![](images/create-api-01.png)
 
 ![](images/create-api-02.png)
 
+
 ## 4. Install Auth0 Dependencies
 
-**Run the following command** in the Angular app console:  
+**Run the following command** in the Angular app console:
 
 ```bash
 npm install @auth0/auth0-angular
@@ -149,6 +151,7 @@ export class LoginStatusComponent {
 }
 ```
 
+
 ## 7. Update `app.module.ts`
 
 Update `app.module.ts` with the following additions:
@@ -181,6 +184,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
 })
 export class AppModule { }
 ```
+
 
 ## 8. Add `auth-interceptor.service.ts`
 
@@ -245,11 +249,11 @@ okta.oauth2.audience=http://localhost:8080
 
 ## 10. Run the Application
 
-1. Sign up using email or social login  
-2. Verify member and orders  
-3. Logout  
+1. Sign up using email or social login
+2. Verify member and orders
+3. Logout
 
 ---
 
-© luv2code LLC  
+© luv2code LLC
 [www.luv2code.com](http://www.luv2code.com)

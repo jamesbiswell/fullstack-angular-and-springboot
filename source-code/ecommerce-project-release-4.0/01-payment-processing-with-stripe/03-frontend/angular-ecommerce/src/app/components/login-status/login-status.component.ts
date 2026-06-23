@@ -1,54 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { OktaAuthService } from '@okta/okta-angular';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-login-status',
+  // template: '<button (click)="login()">Log in</button>',
   templateUrl: './login-status.component.html',
   styleUrls: ['./login-status.component.css']
 })
-export class LoginStatusComponent implements OnInit {
+export class LoginStatusComponent {
 
   isAuthenticated: boolean = false;
-  userFullName: string;
-
+  profileJson: string | undefined;
+  userEmail: string | undefined;
   storage: Storage = sessionStorage;
 
-  constructor(private oktaAuthService: OktaAuthService) { }
+  constructor(private auth: AuthService, @Inject(DOCUMENT) private doc: Document) {}
 
   ngOnInit(): void {
-
-    // Subscribe to authentication state changes
-    this.oktaAuthService.$authenticationState.subscribe(
-      (result) => {
-        this.isAuthenticated = result;
-        this.getUserDetails();
+    this.auth.isAuthenticated$.subscribe(
+      (authenticated: boolean) => {
+        this.isAuthenticated = authenticated;
+        console.log('User is authenticated: ', this.isAuthenticated);
       }
     );
-    
+    this.auth.user$.subscribe(
+      (user) => {
+        this.userEmail = user?.email;
+         // now store the email in browser storage
+         this.storage.setItem('userEmail', JSON.stringify(this.userEmail));
+        console.log('User ID: ', this.userEmail);
+      }
+    );
   }
 
-  getUserDetails() {
-    if (this.isAuthenticated) {
-
-      // Fetch the logged in user details (user's claims)
-      //
-      // user full name is exposed as a property name
-      this.oktaAuthService.getUser().then(
-        (res) => {
-          this.userFullName = res.name;
-
-          // retrieve the user's email from authentication response
-          const theEmail = res.email;
-
-          // now store the email in browser storage
-          this.storage.setItem('userEmail', JSON.stringify(theEmail));
-        }
-      );
-    }
+  login() {
+    this.auth.loginWithRedirect();
   }
 
-  logout() {
-    // Terminates the session with Okta and removes current tokens.
-    this.oktaAuthService.signOut();
+  logout(): void {
+    // this.auth.logout({ returnTo: this.doc.location.origin });
+    this.auth.logout({
+      logoutParams: {
+        returnTo: this.doc.location.origin
+      }
+    });
   }
+
 }
