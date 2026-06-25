@@ -25,6 +25,7 @@ yarn-error.log*
 
 /ssl-localhost
 /src/lib
-/config
+/src/app/config
+/src/environments
 
 .env

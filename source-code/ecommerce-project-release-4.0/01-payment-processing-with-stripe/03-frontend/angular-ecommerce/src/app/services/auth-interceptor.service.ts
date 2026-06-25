@@ -19,8 +19,9 @@ export class AuthInterceptorService implements HttpInterceptor {
     private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
 
         const baseURL = environment.luv2shopApiUrl;
+        // const baseURL = 'http://localhost:8181/api';
 
-        const orders = baseURL + '/orders/**';
+        const orders = baseURL + '/orders';
         const purchase = baseURL + '/checkout/purchase';
         const paymentIntent = baseURL + '/checkout/payment-intent';
 
