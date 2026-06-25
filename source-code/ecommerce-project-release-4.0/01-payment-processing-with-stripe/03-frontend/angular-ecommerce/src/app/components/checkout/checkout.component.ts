@@ -354,7 +354,6 @@ export class CheckoutComponent implements OnInit {
       this.checkoutFormGroup.markAllAsTouched();
       return;
     }
-
   }
 
   resetCart() {

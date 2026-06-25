@@ -8,6 +8,7 @@ import { PaymentInfo } from '../common/payment-info';
 @Injectable({
   providedIn: 'root'
 })
+
 export class CheckoutService {
 
   private purchaseUrl = environment.luv2shopApiUrl + '/checkout/purchase';
@@ -25,5 +26,5 @@ export class CheckoutService {
   createPaymentIntent(paymentInfo: PaymentInfo): Observable<any> {
     return this.httpClient.post<PaymentInfo>(this.paymentIntentUrl, paymentInfo);
   }
-  
+
 }
