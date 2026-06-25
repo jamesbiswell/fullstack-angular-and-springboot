@@ -13,11 +13,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // protect endpoint /api/orders
         http.authorizeRequests()
-                .antMatchers("/api/orders/**")
+                .antMatchers("/api/orders/**").authenticated()
+                .antMatchers("/api/checkout/purchase").authenticated()
+                .antMatchers("/api/products/payment-intent").authenticated()
+                .and()
+                .oauth2ResourceServer()
+                .jwt();
+        
+        // OR
+        /*
+        http.authorizeRequests()
+                .antMatchers(
+                        "/api/orders/**",
+                        "/api/checkout/purchase",
+                        "/api/checkout/payment-intent"
+                )
                 .authenticated()
                 .and()
                 .oauth2ResourceServer()
                 .jwt();
+         */
 
         // add CORS filters
         http.cors();

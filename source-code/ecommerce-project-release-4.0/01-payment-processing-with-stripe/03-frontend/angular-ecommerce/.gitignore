@@ -29,3 +29,4 @@ yarn-error.log*
 /src/environments
 
 .env
+/package-backup.json
